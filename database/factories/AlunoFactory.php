@@ -16,6 +16,7 @@ class AlunoFactory extends Factory
             'nome'=> $this->faker->name,
             'cpf'=> $this->faker->numerify('###########'),
             'telefone'=> $this->faker->phoneNumber(),
+            'categoria_id'=>\App\Models\CategoriAaluno::all()->random()->id,
         ];
     }
 }

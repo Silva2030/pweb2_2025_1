@@ -26,28 +26,33 @@ class AlunoController extends Controller
      */
     public function create()
     {
-        return view('aluno.form');
+        $categorias = CategoriAaluno::oderBay('nome')->get();
+        return view('aluno.form',[
+        'categorias'=>$categorias,
+    ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    private function validateRequest(Request $request) {
         $request->validate([
             'nome' => 'required|min:3|max:100',
             'cpf' => 'required|max:14',
-            'telefone' => 'nullable|min:10|max:40'
+            'telefone' => 'nullable|min:10|max:40',
+            'categoria_id'=>'required',
         ], [
             'nome.required' => 'O :attribute é obrigatório',
             'cpf.required' => 'O :attribute é obrigatório',
+            'categoria_id.required' => 'O :attribute é obrigatório',
         ]);
+    }
 
-        $data = [
-            'nome' => $request->nome,
-            'cpf' => $request->cpf,
-            'telefone' => $request->telefone,
-        ];
+    public function store(Request $request)
+    {
+        $this->validateRequest($request);
+
+        $data = $request->all();
 
         Aluno::create($data);
 

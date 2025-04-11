@@ -31,6 +31,18 @@
         <button type="submit">Salvar</button><br>
         <a href="{{ url('aluno') }}">Voltar</a>
 
+        <label for="">Categoria</label><br>
+        <select name="categoria_id">
+            @foreach($categorias as $categorias)
+            <option value="{{$categoria->id}}">
+                {{old('categoria_id',$dado->categoria_id ??'')
+            == $categoria->id ?  'selected' :''}}>
+            {{$categoria->nome}}
+            </option>
+            @endforeach
+        </select>
+       <button type="submit">Salvar></button><br>
+       <a href="{{url('aluno')}}">Voltar</a>
     </form>
 
 @stop
